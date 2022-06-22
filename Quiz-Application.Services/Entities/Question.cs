@@ -10,10 +10,11 @@ namespace Quiz_Application.Services.Entities
 {
   public  class Question:BaseEntity
     {
-        [Key]
-        public int QuestionID { get; set; }
-        public int QuestionType { get; set; }  //MCQ-1      
-        public string DisplayText { get; set; }
-        public int ExamID { get; set; }
+        public int QuestionType { get; set; }
+        
+        [Column(TypeName = "varchar(300)")]
+        public string Text { get; set; }
+        
+        public Test Test { get; set; }
     }
 }

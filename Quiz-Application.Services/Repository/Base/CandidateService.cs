@@ -32,7 +32,7 @@ namespace Quiz_Application.Services.Repository.Base
             IQueryable<TEntity> query=_dbSet;
             if (search != null)
             { 
-                query =query.Where(search); 
+                query = query.Where(search); 
             }           
             return query;
         }

@@ -9,7 +9,7 @@ namespace Quiz_Application.Web.Models
 {
     public class ProfileViewModel
     {
-        public int Sl_No { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
 
@@ -19,10 +19,6 @@ namespace Quiz_Application.Web.Models
 
         [Required,Phone]
         public string Phone { get; set; }
-
-        [Required]
-        [Display(Name = "Candidate ID")]
-        public string Candidate_ID { get; set; }
         public string ImgFile { get; set; }
         public IFormFile file { get; set; }
         

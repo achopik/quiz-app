@@ -11,6 +11,9 @@ namespace Quiz_Application.Services.Entities
     public class BaseEntity
     {            
        
+        [Key]
+        public int Id { get; set; }
+        
         [Column(TypeName = "date")]
         [DataType(DataType.DateTime)]
         public DateTime? CreatedOn { get; set; }
@@ -24,6 +27,7 @@ namespace Quiz_Application.Services.Entities
 
         [Column(TypeName = "varchar(200)")]
         public string ModifiedBy { get; set; }
+        
         public bool IsDeleted { get; set; }
     }
 }

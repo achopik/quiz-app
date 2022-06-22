@@ -32,7 +32,7 @@ namespace Quiz_Application.Web.Controllers
         public async Task<IActionResult> Index()
         {
             Candidate objHis = HttpContext.Session.GetObjectFromJson<Candidate>("AuthenticatedUser");
-            IQueryable<Candidate> iqCandidate = await _candidate.SearchCandidate(e => e.Sl_No.Equals(objHis.Sl_No));
+            IQueryable<Candidate> iqCandidate = await _candidate.SearchCandidate(e => e.Id.Equals(objHis.Id));
             Candidate objCandidate = iqCandidate.FirstOrDefault();
             return View(objCandidate);
         }       
@@ -41,14 +41,13 @@ namespace Quiz_Application.Web.Controllers
         public async Task<IActionResult> Profile()
         {
             Candidate objHis= HttpContext.Session.GetObjectFromJson<Candidate>("AuthenticatedUser");
-            IQueryable<Candidate> iqCandidate =await _candidate.SearchCandidate(e=>e.Sl_No.Equals(objHis.Sl_No));
+            IQueryable<Candidate> iqCandidate =await _candidate.SearchCandidate(e=>e.Id.Equals(objHis.Id));
             Candidate objCandidate = iqCandidate.FirstOrDefault();
 
             ProfileViewModel objModel = new ProfileViewModel()
             {
-                Sl_No = objCandidate.Sl_No,
+                Id = objCandidate.Id,
                 Name = objCandidate.Name,
-                Candidate_ID = objCandidate.Candidate_ID,
                 Email = objCandidate.Email,
                 Phone = objCandidate.Phone,
                 ImgFile = objCandidate.ImgFile!=null ? objCandidate.ImgFile:null
@@ -74,9 +73,8 @@ namespace Quiz_Application.Web.Controllers
                         UniqueFileName = Guid.NewGuid().ToString() + "_" + argObj.file.FileName;
                         UploadPath = Path.Combine(UploadFolder, UniqueFileName);
                     }
-                    Candidate _objCandidate = await _candidate.GetCandidate(argObj.Sl_No);       
+                    Candidate _objCandidate = await _candidate.GetCandidate(argObj.Id);       
                     _objCandidate.Name = argObj.Name;
-                    _objCandidate.Candidate_ID = argObj.Candidate_ID;
                     _objCandidate.Phone = argObj.Phone;
                     _objCandidate.Email = argObj.Email;
                     if (UniqueFileName != null)
@@ -91,8 +89,8 @@ namespace Quiz_Application.Web.Controllers
                     {
                         if (argObj.file != null)
                         {
-                        await argObj.file.CopyToAsync(new FileStream(UploadPath, FileMode.Create));
-                        }                        
+                            await argObj.file.CopyToAsync(new FileStream(UploadPath, FileMode.Create));
+                        }
                         ViewBag.Alert = AlertExtension.ShowAlert(Alerts.Success, "Профиль успешно обновлен.");
                     }
                     else                    

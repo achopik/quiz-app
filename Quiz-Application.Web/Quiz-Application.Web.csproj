@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\site.min.js" />
+    <_ContentIncludedByDefault Remove="Views\Score\Result.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

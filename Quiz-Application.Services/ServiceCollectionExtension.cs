@@ -15,11 +15,12 @@ namespace Quiz_Application.Services
     {        
        public static IServiceCollection AddServices(this IServiceCollection services)
        {
-            return services
-           .AddScoped<ICandidate<Entities.Candidate>, CandidateService<Entities.Candidate>>()
-           .AddScoped<IExam<Entities.Exam>, ExamService<Entities.Exam>>()
-           .AddScoped<IQuestion<Entities.Question>, QuestionService<Entities.Question>>()
-           .AddScoped<IResult<Entities.Result>, ResultService<Entities.Result>>();
-        }
+           return services
+               .AddScoped<ICandidate<Entities.Candidate>, CandidateService<Entities.Candidate>>()
+               .AddScoped<ITest<Entities.Test>, TestService<Entities.Test>>()
+               .AddScoped<IQuestion<Entities.Question>, QuestionService<Entities.Question>>()
+               .AddScoped<IAnswer<Entities.Answer>, AnswerService<Entities.Answer>>()
+               .AddScoped<ITopic<Entities.Topic>, TopicService<Entities.Topic>>();
+       }
     }
 }

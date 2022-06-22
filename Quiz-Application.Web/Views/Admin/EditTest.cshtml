@@ -1,0 +1,127 @@
+@using System.Collections
+@using Microsoft.CodeAnalysis.CSharp
+@using Quiz_Application.Services.Entities
+@using Quiz_Application.Services.Repository.Base
+@using Quiz_Application.Services.Repository.Interfaces
+@model Quiz_Application.Services.Entities.Test
+
+@{
+    ViewData["Title"] = "Редактировать тест";
+}
+
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <div class="w3-row">
+        <h1>Изменение теста</h1>
+        <div class="w3-card">
+            <a class="w3-button w3-block w3-blue w3-bar-item w3-padding-large" asp-action="Index">Назад к списку тестов</a>
+        </div>
+        
+        <div class="w3-card w3-round w3-white">
+            <div class="w3-container w3-padding">
+                <form asp-action="EditTest" class="w3-container">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <p><input type="hidden" asp-for="Id" /></p>
+                    <div class="form-group w3-margin-bottom">
+                        <b><label asp-for="Name" class="w3-text-blue">Тема</label></b>
+                        <input asp-for="Name" class="w3-input w3-border"/>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <b><label asp-for="Description" class="w3-text-blue">Описание</label></b>
+                        <input asp-for="Description" class="w3-input w3-border"/>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <button type="submit" class="w3-button w3-block w3-gray"><i class="fa fa-save"></i> Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <h2>Вопросы</h2>
+        
+        <form enctype="multipart/form-data" id="questionForm" method="post">
+            @foreach (var it in ((List<Question>) ViewData["Questions"]).Select((question, idx) => new {question, idx}))
+            {
+                <div class="w3-card w3-round w3-white w3-margin-bottom w3-margin-top question-card" itemid="@it.idx">
+                    <div class="w3-container w3-button w3-grey remove-question">
+                        <i class="fa fa-times"></i>
+                    </div>
+                    <input class="question-id" type="hidden" value="@it.question.Id" name="question.@it.idx@(".Id")"/>
+
+                    @* Question Block *@
+                    <div class="w3-row w3-margin">
+                        <div class="w3-container question-name">
+                            <input
+                                asp-for="@it.question.Text"
+                                name="question.@it.idx@(".Text")"
+                                id="question.@it.idx@(".Text")"
+                                class="w3-input w3-border"/>
+                        </div>
+                    </div>
+                    <hr/>
+
+                    @* Mid Block *@
+                    <div class="w3-row">
+                        <div class="w3-container">
+                            <h3>Варианты ответа</h3>
+                        </div>
+                    </div>
+                    <table class="w3-table w3-bordered">
+                        <tr>
+                            <th>Ответ</th>
+                            <th>Правильный</th>
+                            <th>Удалить</th>
+                        </tr>
+                        @foreach (var answerIt in (((Dictionary<int, List<Answer>>) ViewData["Answers"])[it.question.Id]).Select((answer, idx) => new {answer, idx}))
+                        {
+                            <input 
+                                type="hidden" 
+                                value="@answerIt.answer.Id" 
+                                name="question.@it.idx@(".answer").@answerIt.idx@(".Id")"
+                                id="question.@it.idx@(".answer").@answerIt.idx@(".Id")"/>
+                            <tr itemid="@answerIt.idx">
+                                <td>
+                                    <input
+                                        asp-for="@answerIt.answer.Text"
+                                        name="question.@it.idx@(".answer").@answerIt.idx@(".Text")"
+                                        id="question.@it.idx@(".answer").@answerIt.idx@(".Text")"
+                                        class="w3-input w3-border"/>
+                                </td>
+                                <td>
+                                    <input
+                                        asp-for="@answerIt.answer.IsCorrect"
+                                        name="question.@it.idx@(".answer").@answerIt.idx@(".IsCorrect")"
+                                        id="question.@it.idx@(".answer").@answerIt.idx@(".IsCorrect")"
+                                        class="w3-check boolean-value"/>
+                                </td>
+                                <td>
+                                    <div class="w3-button w3-block w3-gray remove-answer"><i class="fa fa-times"></i></div>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                    <div class="w3-card w3-round w3-white w3-margin-bottom w3-margin-top">
+                        <button type="button" onclick="addAnswer('@it.idx')" class="w3-button w3-block w3-gray answerAddButton"><i class="fa fa-plus"></i> Добавить ответ</button>
+                    </div>
+                </div>
+                <br/>
+            }
+            <div class="w3-card w3-round w3-white w3-margin-bottom w3-margin-top question-add-card">
+                <button type="button" class="w3-button w3-block w3-gray" id="questionAddButton"><i class="fa fa-plus"></i> Добавить вопрос</button>
+            </div>
+            <br/>
+            <div class="w3-card w3-round w3-white w3-margin-bottom w3-margin-top">
+                <button type="button" onclick="serializeForm()" class="w3-button w3-block w3-gray"><i class="fa fa-save"></i> Сохранить вопросы</button>
+            </div>
+        </form>
+        
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

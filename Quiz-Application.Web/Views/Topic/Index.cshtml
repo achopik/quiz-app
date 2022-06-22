@@ -1,5 +1,37 @@
+@model IEnumerable<Quiz_Application.Services.Entities.Topic>
+
 @{
     ViewData["Title"] = "Темы";
 }
 
-<h2>title</h2>
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <div class="w3-row">
+        <h1>Просмотр тем</h1>
+        
+        @foreach (var item in Model)
+        {
+            <div class="w3-card w3-round w3-white w3-margin-bottom">
+                <div class="w3-row">
+                    <button onclick="showContent('topic-@item.Id')" class="w3-btn w3-block w3-left-align">
+                        <h6 class="w3-opacity">@Html.DisplayFor(modelItem => item.Name)</h6>
+                    </button>
+                    <div id="topic-@item.Id" class="w3-container w3-hide">
+                        <p>@Html.DisplayFor(modelItem => item.Content)</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
+    <script>
+        function showContent(id) {
+          var x = document.getElementById(id);
+          if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+          } else { 
+            x.className = x.className.replace(" w3-show", "");
+          }
+        }
+    </script>
+
+</div>

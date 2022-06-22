@@ -46,7 +46,7 @@ namespace Quiz_Application.Web.Controllers
             {
                 try
                 {
-                    IQueryable<Candidate> _iqCandidate = await _candidate.SearchCandidate(e => e.Candidate_ID.Equals(objCollection.Candidate_ID));
+                    IQueryable<Candidate> _iqCandidate = await _candidate.SearchCandidate(e => e.Email.Equals(objCollection.Email));
                     if (!_iqCandidate.Any())
                     {
                         Services.Entities.Candidate _objcandidate = new Services.Entities.Candidate()
@@ -54,8 +54,7 @@ namespace Quiz_Application.Web.Controllers
                             Name = objCollection.Name,
                             Email = objCollection.Email,
                             Phone = objCollection.Phone,
-                            Candidate_ID = objCollection.Candidate_ID,
-                            Roles = "User",
+                            Role = "User",
                             Password = objCollection.Password.EncodeBase64(),
                             CreatedBy = "SYSTEM",
                             CreatedOn = DateTime.Now
@@ -69,7 +68,7 @@ namespace Quiz_Application.Web.Controllers
                             TempData["Message"] = "Произошла ошибка.";
                     }
                     else
-                        TempData["Message"] = "Пользователь с данным ID уже существует.";
+                        TempData["Message"] = "Пользователь с данным email уже существует.";
                 }
                 catch (Exception ex)
                 {
@@ -172,45 +171,6 @@ namespace Quiz_Application.Web.Controllers
             finally
             {
             }
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Reset()
-        {
-            if (TempData["Message"] != null)
-            {
-                TempData["Message"] = null;
-            }
-            return PartialView("_Reset");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Reset([FromForm] ResetViewModel objCollection)
-        {
-            if (ModelState.IsValid)
-            {
-                int i = 0;
-                IQueryable<Candidate> _iqCandidate = await _candidate.SearchCandidate(e => e.Email.Equals(objCollection.Email));
-                if (_iqCandidate.Any())
-                {
-                    Candidate objCandidate = _iqCandidate.FirstOrDefault();
-                    objCandidate.Password = objCollection.Password.EncodeBase64();
-                    objCandidate.ModifiedBy = objCollection.Email;
-                    objCandidate.ModifiedOn = DateTime.Now;
-                   
-                    i = await _candidate.UpdateCandidate(objCandidate);
-
-                    if (i > 0)
-                        return RedirectToAction("Login", "Account");
-                    else
-                        TempData["Message"] = "Произошла ошибка.";
-                }
-                else
-                    TempData["Message"] = "Неправильный Email.";
-            }
-            return PartialView("_Reset");
         }
 
     }

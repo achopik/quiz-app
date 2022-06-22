@@ -3,7 +3,7 @@
     ViewData["Title"] = "Главная";
 }
 
-@Html.HiddenFor(c => c.Candidate_ID)
+@* @Html.HiddenFor(c => c.Candidate_ID) *@
 
 <!-- Page Container -->
 <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
@@ -26,7 +26,6 @@
                         }
                     </p>
                     <hr>
-                    <p><i class="fa fa-address-card fa-fw w3-margin-right w3-text-theme"></i><lable id="eqCandidateID">@Model.Candidate_ID</lable></p>
                     <p><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i>@Model.Name</p>
                     <p><i class="fa fa-phone fa-fw w3-margin-right w3-text-theme"></i>@Model.Phone</p>
                     <p><i class="fa fa-paper-plane fa-fw w3-margin-right w3-text-theme"></i>@Model.Email</p>            
@@ -37,7 +36,7 @@
         <!-- Middle Column -->
         <div class="w3-col m7">
             <div class="w3-row-padding" id="pnlExam">
-                <div class="w3-col m12">
+                <div class="w3-col m12 w3-rest">
                     <div class="w3-card w3-round w3-white">
                         <div class="w3-container w3-padding">
                             <h6 class="w3-opacity">Выберите тест</h6>
@@ -47,19 +46,19 @@
                     </div>
                 </div>
             </div>
-            <div class="w3-container w3-card w3-white w3-round w3-margin" id="eqMain">
-                <br>
-                <span class="w3-right w3-opacity" id="eqCount"></span>
-                <h3>Тест начнется по нажатию кнопки Старт.</h3>
-                <hr class="w3-clear">
-                <h4 style="color:red;" id="eqQuestion"></h4>
-                <p></p>               
-                <button class="w3-button w3-block w3-blue" id="btnSave"><i class="fa fa-check"></i> Сохранить ответ</button>
-                <hr class="w3-clear">
-                <button id="btnPrev" type="button" class="w3-button w3-theme-d1 w3-margin-bottom w3-left"><i class="fa fa-angle-left"></i> Предыдущий</button>
-                <button id="btnNext" type="button" class="w3-button w3-theme-d1 w3-margin-bottom w3-right">Следующий <i class="fa fa-angle-right"></i></button>
-            </div>
-            <!-- End Middle Column -->
+            @* <div class="w3-container w3-card w3-white w3-round w3-margin" id="eqMain"> *@
+            @*     <br> *@
+            @*     <span class="w3-right w3-opacity" id="eqCount"></span> *@
+            @*     <h3>Тест начнется по нажатию кнопки Старт.</h3> *@
+            @*     <hr class="w3-clear"> *@
+            @*     <h4 style="color:red;" id="eqQuestion"></h4> *@
+            @*     <p></p>                *@
+            @*     <button class="w3-button w3-block w3-blue" id="btnSave"><i class="fa fa-check"></i> Сохранить ответ</button> *@
+            @*     <hr class="w3-clear"> *@
+            @*     <button id="btnPrev" type="button" class="w3-button w3-theme-d1 w3-margin-bottom w3-left"><i class="fa fa-angle-left"></i> Предыдущий</button> *@
+            @*     <button id="btnNext" type="button" class="w3-button w3-theme-d1 w3-margin-bottom w3-right">Следующий <i class="fa fa-angle-right"></i></button> *@
+            @* </div> *@
+            @* <!-- End Middle Column --> *@
         </div>
 
         <!-- End Grid -->

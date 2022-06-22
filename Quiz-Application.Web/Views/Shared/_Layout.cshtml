@@ -38,8 +38,9 @@
         <div class="w3-top">
                 <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
                     <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-                    <a asp-controller="Home" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-book"></i> Тест</a>
+                    <a asp-controller="Home" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-book"></i> Главная</a>
                     <a asp-controller="Topic" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Topics"><i class="fa fa-newspaper-o"></i> Темы</a>
+                    <a asp-controller="Admin" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"><i class="fa fa-calculator"></i> Редактор тестов</a>
                     <a asp-action="Logout" asp-controller="Account" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large fa fa-close" title="Выход"></a>
                     <div class="w3-dropdown-hover w3-hide-small">
                                             <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-cog"></i> Настройки</button>
@@ -72,10 +73,8 @@
     @* <environment include="Development"> *@
     @*     <script src="~/js/site.js" asp-append-version="true"></script> *@
     @* </environment> *@
-    <environment exclude="Development">
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    
+    <script src="~/js/site.js"></script>
+
     <script type="text/javascript">
             // Accordion
             function myFunction(id) {

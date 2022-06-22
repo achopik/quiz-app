@@ -61,7 +61,7 @@ namespace Quiz_Application.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}/{id?}");                    
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }

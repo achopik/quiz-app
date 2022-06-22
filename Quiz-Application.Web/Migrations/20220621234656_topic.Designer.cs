@@ -10,8 +10,8 @@ using Quiz_Application.Services;
 namespace Quiz_Application.Web.Migrations
 {
     [DbContext(typeof(QuizDBContext))]
-    [Migration("20220619222147_initial")]
-    partial class initial
+    [Migration("20220621234656_topic")]
+    partial class topic
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,13 +23,10 @@ namespace Quiz_Application.Web.Migrations
 
             modelBuilder.Entity("Quiz_Application.Services.Entities.Answer", b =>
                 {
-                    b.Property<int>("Sl_No")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("ChoiceID")
-                        .HasColumnType("integer");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(200)");
@@ -37,8 +34,8 @@ namespace Quiz_Application.Web.Migrations
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("date");
 
-                    b.Property<string>("DisplayText")
-                        .HasColumnType("text");
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -49,23 +46,25 @@ namespace Quiz_Application.Web.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("date");
 
-                    b.Property<int>("QuestionID")
+                    b.Property<int?>("QuestionId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Sl_No");
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answer");
                 });
 
             modelBuilder.Entity("Quiz_Application.Services.Entities.Candidate", b =>
                 {
-                    b.Property<int>("Sl_No")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Candidate_ID")
-                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(200)");
@@ -97,86 +96,17 @@ namespace Quiz_Application.Web.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("Roles")
+                    b.Property<string>("Role")
                         .HasColumnType("varchar(100)");
 
-                    b.HasKey("Sl_No");
+                    b.HasKey("Id");
 
                     b.ToTable("Candidate");
                 });
 
-            modelBuilder.Entity("Quiz_Application.Services.Entities.Choice", b =>
-                {
-                    b.Property<int>("ChoiceID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("date");
-
-                    b.Property<string>("DisplayText")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("date");
-
-                    b.Property<int>("QuestionID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ChoiceID");
-
-                    b.ToTable("Choice");
-                });
-
-            modelBuilder.Entity("Quiz_Application.Services.Entities.Exam", b =>
-                {
-                    b.Property<int>("ExamID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("date");
-
-                    b.Property<decimal>("Duration")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FullMarks")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(1000)");
-
-                    b.HasKey("ExamID");
-
-                    b.ToTable("Exam");
-                });
-
             modelBuilder.Entity("Quiz_Application.Services.Entities.Question", b =>
                 {
-                    b.Property<int>("QuestionID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -186,12 +116,6 @@ namespace Quiz_Application.Web.Migrations
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("date");
-
-                    b.Property<string>("DisplayText")
-                        .HasColumnType("text");
-
-                    b.Property<int>("ExamID")
-                        .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -205,67 +129,27 @@ namespace Quiz_Application.Web.Migrations
                     b.Property<int>("QuestionType")
                         .HasColumnType("integer");
 
-                    b.HasKey("QuestionID");
+                    b.Property<int?>("TestId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("varchar(300)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestId");
 
                     b.ToTable("Question");
                 });
 
-            modelBuilder.Entity("Quiz_Application.Services.Entities.QuizAttempt", b =>
-                {
-                    b.Property<string>("Date")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Exam")
-                        .HasColumnType("text");
-
-                    b.Property<int>("ExamID")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Score")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SessionID")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Sl_No")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-                });
-
-            modelBuilder.Entity("Quiz_Application.Services.Entities.QuizReport", b =>
-                {
-                    b.Property<int>("CandidateID")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Date")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Exam")
-                        .HasColumnType("text");
-
-                    b.Property<int>("ExamID")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SessionID")
-                        .HasColumnType("text");
-                });
-
             modelBuilder.Entity("Quiz_Application.Services.Entities.Result", b =>
                 {
-                    b.Property<int>("Sl_No")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AnswerID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CandidateID")
+                    b.Property<int?>("CandidateId")
                         .HasColumnType("integer");
 
                     b.Property<string>("CreatedBy")
@@ -273,12 +157,6 @@ namespace Quiz_Application.Web.Migrations
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("date");
-
-                    b.Property<int>("ExamID")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsCorrent")
-                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -289,18 +167,118 @@ namespace Quiz_Application.Web.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("date");
 
-                    b.Property<int>("QuestionID")
+                    b.Property<int>("Score")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SelectedOptionID")
+                    b.Property<int?>("TestId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("SessionID")
-                        .HasColumnType("text");
+                    b.HasKey("Id");
 
-                    b.HasKey("Sl_No");
+                    b.HasIndex("CandidateId");
+
+                    b.HasIndex("TestId");
 
                     b.ToTable("Result");
+                });
+
+            modelBuilder.Entity("Quiz_Application.Services.Entities.Test", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Test");
+                });
+
+            modelBuilder.Entity("Quiz_Application.Services.Entities.Topic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("varchar(5000)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Topic");
+                });
+
+            modelBuilder.Entity("Quiz_Application.Services.Entities.Answer", b =>
+                {
+                    b.HasOne("Quiz_Application.Services.Entities.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId");
+
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("Quiz_Application.Services.Entities.Question", b =>
+                {
+                    b.HasOne("Quiz_Application.Services.Entities.Test", "Test")
+                        .WithMany()
+                        .HasForeignKey("TestId");
+
+                    b.Navigation("Test");
+                });
+
+            modelBuilder.Entity("Quiz_Application.Services.Entities.Result", b =>
+                {
+                    b.HasOne("Quiz_Application.Services.Entities.Candidate", "Candidate")
+                        .WithMany()
+                        .HasForeignKey("CandidateId");
+
+                    b.HasOne("Quiz_Application.Services.Entities.Test", "Test")
+                        .WithMany()
+                        .HasForeignKey("TestId");
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("Test");
                 });
 #pragma warning restore 612, 618
         }

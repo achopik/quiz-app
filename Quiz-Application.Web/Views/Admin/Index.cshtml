@@ -1,0 +1,36 @@
+@model IEnumerable<Quiz_Application.Services.Entities.Test>
+
+@{
+    ViewData["Title"] = "Тесты";
+}
+
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <div class="w3-row">
+        <h1>Просмотр тестов</h1>
+        <div class="w3-card">
+            <a class="w3-button w3-block w3-blue w3-bar-item w3-padding-large" asp-action="CreateTest">Создать</a>
+        </div>
+        <br/>
+        @foreach (var item in Model)
+        {
+            <div class="w3-card w3-round w3-white w3-margin-bottom">
+                <div class="w3-row">
+                    <div class="w3-col m10">
+                        <div class="w3-container w3-padding">
+                            <h6 class="w3-opacity">@Html.DisplayFor(modelItem => item.Name)</h6>
+                            <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                        </div>
+                    </div>
+
+                    <div class="w3-col m2">
+                        <div class="w3-container w3-padding">
+                            <a asp-action="EditTest" asp-route-id="@item.Id"><h6 class="w3-opacity">Редактировать</h6></a>
+                            <a asp-action="DeleteTest" asp-route-id="@item.Id"><h6 class="w3-opacity">Удалить</h6></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
+</div>

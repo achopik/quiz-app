@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Quiz_Application.Services;
@@ -9,9 +10,10 @@ using Quiz_Application.Services;
 namespace Quiz_Application.Web.Migrations
 {
     [DbContext(typeof(QuizDBContext))]
-    partial class QuizDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220620211627_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,39 +213,6 @@ namespace Quiz_Application.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Test");
-                });
-
-            modelBuilder.Entity("Quiz_Application.Services.Entities.Topic", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Content")
-                        .HasColumnType("varchar(5000)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("date");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(250)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Topic");
                 });
 
             modelBuilder.Entity("Quiz_Application.Services.Entities.Answer", b =>
